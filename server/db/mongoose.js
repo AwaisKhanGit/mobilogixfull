@@ -4,11 +4,8 @@ module.exports = connectDB = async () =>{
     try {
         const connect = await mongoose.connect(process.env.MONGODB_URL, {
             useNewUrlParser: true,
-            useCreateIndex: true,
-            useFindAndModify:false,
             useUnifiedTopology: true
         })
-
         console.log(`MongoDB Connected : ${connect.connection.host}`)
     } catch (error) {
         console.log(`Error Connecting Mongo: ${error.message}`)
