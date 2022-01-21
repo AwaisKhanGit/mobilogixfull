@@ -10,7 +10,7 @@ function ProtectedRoute({ component, children, ...props }) {
     <Route
       {...props}
     >
-      {user.id ?
+      {user._id ?
         <ProtectedComponent />
         :
         <LoginPage />

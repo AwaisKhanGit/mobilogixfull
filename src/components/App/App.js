@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from '../Home/Home'
 import LoginPage from '../LoginPage/LoginPage'
 import RegisterPage from '../RegisterPage/RegisterPage'
@@ -18,8 +18,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={user._id ? <Home /> : <LoginPage />} />
-          <Route path="/registration" element={user._id ? <Home /> : <RegisterPage />} />
+          <Route path="/login" element={user._id ? <Navigate  to="/" /> : <LoginPage />} />
+          <Route path="/registration" element={user._id ? <Navigate  to="/" /> : <RegisterPage />} />
         </Routes>
       </Router>
     </div>
