@@ -31,10 +31,6 @@ const employeeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    employeeExperience: {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'Experiences'
-    },
     employeeRole: {
         type: String,
         required: true
