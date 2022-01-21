@@ -25,7 +25,8 @@ router.post('/login',userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
-router.post('/register', (req, res, next) => {
+router.post('/register', (req, res) => {
+  console.log(req.body)
   const { username } = req.body
   const password = encryptLib.encryptPassword(req.body.password);
     const user = new User({ username,password });

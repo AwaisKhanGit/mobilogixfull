@@ -21,7 +21,7 @@ function* loginUser(action) {
   }
 }
 
-function* logoutUser(action) {
+function* logoutUser() {
   try {
     const config = {
       headers: { 'Content-Type': 'application/json' },

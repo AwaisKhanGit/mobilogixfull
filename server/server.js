@@ -5,7 +5,6 @@ const connectDB = require('./db/mongoose')
 connectDB()
 
 const app = express();
-
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 
