@@ -9,9 +9,6 @@ const experienceSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-},
-{
-    timestamps:true
 })
 
 const Experience = mongoose.model('Experience',experienceSchema)

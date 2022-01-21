@@ -1,45 +1,44 @@
 const mongoose = require('mongoose');
+const Experience = require('../models/experience.model');
 
 const employeeSchema = new mongoose.Schema({
-    employeePicUrl: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    employeePicName: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    employeeName: {
+    picUrl: {
         type: String,
         required: true
     },
-    employeeDesignation: {
+    picName: {
         type: String,
         required: true
     },
-    employeeGrossSalary: {
+    name: {
+        type: String,
+        required: true
+    },
+    designation: {
+        type: String,
+        required: true
+    },
+    grossSalary: {
         type: Number,
         required: true
     },
-    employeeNetSalary: {
+    netSalary: {
         type: Number,
         required: true
     },
-    employeeTaxes: {
+    taxes: {
         type: Number,
         required: true
     },
-    employeeRole: {
+    role: {
         type: String,
         required: true
     },
-    employeeStatus: {
+    status: {
         type: String,
         required: true
     },
-    employeeDepartment: {
+    department: {
         type: String,
         required: true
     }
