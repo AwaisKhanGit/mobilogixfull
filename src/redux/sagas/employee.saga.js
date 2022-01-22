@@ -15,11 +15,10 @@ function* getEmployees() {
 
 function* createEmployee(action) {
   try {
-    const response = yield axios.post('/api/employee',action.payload);
+    yield axios.post('/api/employee',action.payload);
     yield put ({ type : 'EMPLOYEE_CREATION_SUCCESSFULL'})
     yield put({ 
-        type: 'FETCH_EMPLOYEES',
-        payload : response.data
+        type: 'FETCH_EMPLOYEES'
         });
   } catch (error) {
     yield put ({ type : 'EMPLOYEE_CREATION_UNSUCCESSFULL'})
@@ -27,9 +26,23 @@ function* createEmployee(action) {
   }
 }
 
+function* deleteEmployee(action) {
+  try {
+    yield axios.delete(`/api/employee/${action.payload}`);
+    yield put ({ type : 'EMPLOYEE_DELETION_SUCCESSFULL'})
+    yield put({ 
+        type: 'FETCH_EMPLOYEES'
+        });
+  } catch (error) {
+    yield put ({ type : 'EMPLOYEE_DELETION_UNSUCCESSFULL'})
+    console.log('Error with delete employees:', error);
+  }
+}
+
 function* employeeSaga() {
   yield takeLatest('FETCH_EMPLOYEES', getEmployees);
   yield takeLatest('SUBMIT_EMPLOYEE_DATA', createEmployee);
+  yield takeLatest('DELETE_EMPLOYEE',deleteEmployee)
 }
 
 export default employeeSaga;

@@ -33,17 +33,32 @@ const employeeCreationMessage = (state = '', action) => {
     case 'EMPLOYEE_CREATION_SUCCESSFULL':
       return 'Created';
     case 'EMPLOYEE_CREATION_UNSUCCESSFULL':
-      return 'Couldnot be created';
+      return 'Could not be created';
+    case 'CLEAR_EMPLOYEE_CREATION_MESSAGE':
+      return '';
     default:
       return state;
   }
 };
 
 
+const employeeDeletionMessage = (state = '', action) => {
+  switch (action.type) {
+    case 'EMPLOYEE_DELETION_SUCCESSFULL':
+      return 'Deleted';
+    case 'EMPLOYEE_DELETION_UNSUCCESSFULL':
+      return 'Not Deleted';
+    case 'CLEAR_EMPLOYEE_DELETION_MESSAGE':
+      return '';
+    default:
+      return state;
+  }
+};
 
 
 export default combineReducers({
   loginMessage,
   registrationMessage,
-  employeeCreationMessage
+  employeeCreationMessage,
+  employeeDeletionMessage
 });

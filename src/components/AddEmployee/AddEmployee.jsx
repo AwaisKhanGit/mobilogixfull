@@ -36,7 +36,7 @@ const AddEmployee = () => {
     const dispatch = useDispatch()
     const inputElement = useRef();
     const classes = useStyles();
-    // const creationStatus = useSelector(store => store.error.employeeCreationMessage)
+    const creationStatus = useSelector(store => store.errors.employeeCreationMessage)
 
     const [name, setname] = useState("")
     const [designation, setdesignation] = useState("")
@@ -49,22 +49,22 @@ const AddEmployee = () => {
     const [experience, setexperience] = useState("")
     const [experiences, setexperiences] = useState([])
     const [image, setImage] = useState("")
-    // const [snackOpen, setSnackOpen] = useState(false);
 
 
-    // const handleClose = (event, reason) => {
-    //   if (reason === 'clickaway') {
-    //     return;
-    //   }
-    //   setSnackOpen(false);
-    // };
+    const handleSnackClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      creationStatus === "Created" && resetForm()
+      dispatch({type : 'CLEAR_EMPLOYEE_CREATION_MESSAGE'})
+    };
+    
 
-    // const Alert = React.forwardRef(function Alert(props, ref) {
-    //     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    //   });
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+      });
 
     const handleExperienceDelete = (id) => {
-       
         const newArray = [...experiences]
         newArray.splice(id,1)
         setexperiences(newArray)
@@ -82,11 +82,25 @@ const AddEmployee = () => {
         data.append('department', department)
         data.append('experiences', JSON.stringify(experiences))
         data.append('image', image)
-
         dispatch({
             type : 'SUBMIT_EMPLOYEE_DATA',
             payload : data
         })
+    }
+
+    const resetForm = () => {
+        setname("")
+        setdesignation("")
+        setgrossSalary("")
+        setnetSalary("")
+        settaxes("")
+        setrole("")
+        setstatus("active")
+        setdepartment("Customer Care")
+        setexperience("")
+        setexperiences([])
+        setImage("")
+        inputElement.current.value = null
     }
 
 
@@ -187,6 +201,7 @@ const AddEmployee = () => {
                 label="Add Experiences"
                 value={experience}
                 onChange={(e)=>{setexperience(e.target.value)}}
+                helperText={experiences.length < 1 ? "Add(+) atleast one experience before Submit" : ""}
             />
             <IconButton color="primary" component="span"
             onClick = {()=>{setexperiences([...experiences,experience]);setexperience("")}}
@@ -202,7 +217,16 @@ const AddEmployee = () => {
                 <Button variant="contained" onClick = {onSubmitHandler} > Submit </Button>
             </Grid>
             </Grid>
-            {/* <Alert severity="success">{creationStatus}</Alert> */}
+            <Snackbar open={creationStatus === "Created"} autoHideDuration={3000} onClose={handleSnackClose}>
+                <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
+                    Employee Created Successfully
+                </Alert>
+            </Snackbar>
+            <Snackbar open={creationStatus === "Could not be created"} autoHideDuration={3000} onClose={handleSnackClose}>
+                <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+                    Employee Could not be Created
+                </Alert>
+            </Snackbar>
         </>
     )
 }

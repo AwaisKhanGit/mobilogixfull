@@ -39,7 +39,7 @@ router.post('/', rejectUnauthenticated, rejectUnauthorized, upload.single('image
   async (req, res) => {
     try {
           const {name, designation, grossSalary, netSalary, taxes, role, department,status, experiences} = req.body
-          if (experiences.length > 1)
+          if ( JSON.parse(experiences).length > 0)
           {
           const employee = new Employee({ name, designation, grossSalary, netSalary, taxes, role, department, status, picUrl : req.file.path, picName : req.file.filename})
           await employee.save()

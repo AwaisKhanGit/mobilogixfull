@@ -27,10 +27,7 @@ function App() {
           <Route path="/login" exact element={user._id ? <Navigate  to="/" /> : <LoginPage />} />
           <Route path="/registration" exact element={user._id ? <Navigate  to="/" /> : <RegisterPage />} />
           <Route path="/detail/:id" exact element={!user._id ? <Navigate  to="/detail" /> : <Detail />} />
-          {/* <Route path="/add" element={user.userRole === "admin" ? <AddEmployee /> : <Navigate to= "/" /> 
-        } /> */}
-          <Route path="/add" exact element={ <AddEmployee />} />
-
+          <Route path="/add" exact element= { user.userRole === "admin" && <AddEmployee />} />
         </Routes>
       </Router>
     </div>
