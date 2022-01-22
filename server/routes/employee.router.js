@@ -39,15 +39,20 @@ router.post('/', rejectUnauthenticated, rejectUnauthorized, upload.single('image
   async (req, res) => {
     try {
           const {name, designation, grossSalary, netSalary, taxes, role, department,status, experiences} = req.body
+          if (experiences.length > 1)
+          {
           const employee = new Employee({ name, designation, grossSalary, netSalary, taxes, role, department, status, picUrl : req.file.path, picName : req.file.filename})
           await employee.save()
           await Promise.all(
-          experiences.map((element) => {
+            JSON.parse(experiences).map((element) => {
             const experience = new Experience({employeeId : employee._id, 
             employeeExperience : element })
             experience.save()
           }))
-          res.sendStatus(200)    
+          res.sendStatus(200)}
+          else {
+            res.sendStatus(400)
+          }
         } 
     catch (error) {
         await cloudinary.uploader.destroy(req.file.filename)

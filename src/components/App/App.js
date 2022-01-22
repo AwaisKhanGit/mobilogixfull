@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from "../ui/Theme";
 import Home from '../Home/Home'
 import LoginPage from '../LoginPage/LoginPage'
 import RegisterPage from '../RegisterPage/RegisterPage'
 import Detail from '../Detail/Detail'
-import { useDispatch, useSelector } from 'react-redux';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from "../ui/Theme";
+import AddEmployee from '../AddEmployee/AddEmployee'
 
 
 function App() {
@@ -22,10 +23,14 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={!user._id ? <Navigate  to="/login" /> : <Home />} />
-          <Route path="/login" element={user._id ? <Navigate  to="/" /> : <LoginPage />} />
-          <Route path="/registration" element={user._id ? <Navigate  to="/" /> : <RegisterPage />} />
-          <Route path="/detail/:id" element={!user._id ? <Navigate  to="/detail" /> : <Detail />} />
+          <Route path="/" exact element={!user._id ? <Navigate  to="/login" /> : <Home />} />
+          <Route path="/login" exact element={user._id ? <Navigate  to="/" /> : <LoginPage />} />
+          <Route path="/registration" exact element={user._id ? <Navigate  to="/" /> : <RegisterPage />} />
+          <Route path="/detail/:id" exact element={!user._id ? <Navigate  to="/detail" /> : <Detail />} />
+          {/* <Route path="/add" element={user.userRole === "admin" ? <AddEmployee /> : <Navigate to= "/" /> 
+        } /> */}
+          <Route path="/add" exact element={ <AddEmployee />} />
+
         </Routes>
       </Router>
     </div>

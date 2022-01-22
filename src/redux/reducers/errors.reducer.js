@@ -28,8 +28,22 @@ const registrationMessage = (state = '', action) => {
   }
 };
 
+const employeeCreationMessage = (state = '', action) => {
+  switch (action.type) {
+    case 'EMPLOYEE_CREATION_SUCCESSFULL':
+      return 'Created';
+    case 'EMPLOYEE_CREATION_UNSUCCESSFULL':
+      return 'Couldnot be created';
+    default:
+      return state;
+  }
+};
+
+
+
 
 export default combineReducers({
   loginMessage,
   registrationMessage,
+  employeeCreationMessage
 });
