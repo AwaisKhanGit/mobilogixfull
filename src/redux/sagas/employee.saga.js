@@ -26,6 +26,19 @@ function* createEmployee(action) {
   }
 }
 
+function* updateEmployee(action) {
+  try {
+    yield axios.put(`/api/employee/${action.payload.id}`,action.payload);
+    yield put ({ type : 'EMPLOYEE_UPDATE_SUCCESSFULL'})
+    yield put({ 
+        type: 'FETCH_EMPLOYEES'
+        });
+  } catch (error) {
+    yield put ({ type : 'EMPLOYEE_UPDATE_UNSUCCESSFULL'})
+    console.log('Error with create employees:', error);
+  }
+}
+
 function* deleteEmployee(action) {
   try {
     yield axios.delete(`/api/employee/${action.payload}`);
@@ -39,9 +52,12 @@ function* deleteEmployee(action) {
   }
 }
 
+
+
 function* employeeSaga() {
   yield takeLatest('FETCH_EMPLOYEES', getEmployees);
   yield takeLatest('SUBMIT_EMPLOYEE_DATA', createEmployee);
+  yield takeLatest('UPDATE_EMPLOYEE_DATA', updateEmployee);
   yield takeLatest('DELETE_EMPLOYEE',deleteEmployee)
 }
 

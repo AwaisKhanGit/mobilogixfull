@@ -34,6 +34,10 @@ const employeeCreationMessage = (state = '', action) => {
       return 'Created';
     case 'EMPLOYEE_CREATION_UNSUCCESSFULL':
       return 'Could not be created';
+    case 'EMPLOYEE_UPDATE_SUCCESSFULL':
+      return 'Updated';
+    case 'EMPLOYEE_UPDATE_UNSUCCESSFULL':
+      return 'Could not be Updated';
     case 'CLEAR_EMPLOYEE_CREATION_MESSAGE':
       return '';
     default:

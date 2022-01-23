@@ -11,16 +11,40 @@ import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { makeStyles } from '@mui/styles';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+const useStyles = makeStyles({
+  editImage: {
+      position : "absolute",
+      top : 23,
+      borderRadius: "50%",
+      border : "1px solid white",
+      width: "40px",
+      height: "40px" 
+  },
+});
+
 
 const Home = () => {
 
-
+    const classes = useStyles();
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const deletionStatus = useSelector(store => store.errors.employeeDeletionMessage)
 
     const onClickDetail = (id) =>{
       navigate(`/detail/${id}`)
+    }
+
+    const onClickEdit = (id) =>{
+      navigate(`/edit/${id}`)
+    }
+
+    const onEditImage = (id) => {
+
     }
 
     const onDeleteHanlder = (id) => {
@@ -65,7 +89,6 @@ const Home = () => {
     return (
         <>
         <Grid container direction = "column" spacing={3}>
-
         <Grid container item spacing={2} style={{marginTop:"3rem",width:"90%",margin:"auto"}} 
          justifyContent="center">
         {employeeList.map((employee,index)=>
@@ -77,6 +100,10 @@ const Home = () => {
                 image={employee.picUrl}
                 alt={employee.picName}
               />
+              <IconButton color="secondary" component="span" className = {classes.editImage} 
+              onClick={()=>{onEditImage(employee._id)}}>
+                  <EditIcon />
+              </IconButton>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {employee.name}
@@ -87,8 +114,15 @@ const Home = () => {
             </CardContent>
             <CardActions>
               <Button size="small" onClick = {()=>onClickDetail(index)}>Details</Button>
-                {user.userRole === "admin" && <Button size="small">Edit</Button>}
-                {user.userRole === "admin" && <Button size="small" onClick = {()=>onDeleteHanlder(employee._id)}>Delete</Button>}
+                {user.userRole === "admin" && 
+                <IconButton color="primary" component="span" onClick = {()=>onClickEdit(index)}>
+                  <EditIcon />
+                </IconButton>}
+                {user.userRole === "admin" && 
+                  <IconButton color="primary" component="span" onClick = {()=>onDeleteHanlder(employee._id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                  }
             </CardActions>
             </Card>
         </Grid>
@@ -96,15 +130,16 @@ const Home = () => {
       </Grid>
       </Grid>
       <Snackbar open={deletionStatus === "Deleted"} autoHideDuration={3000} onClose={handleSnackClose}>
-                <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
-                    Employee Deleted Successfully
-                </Alert>
-            </Snackbar>
-            <Snackbar open={deletionStatus === "Not Deleted"} autoHideDuration={3000} onClose={handleSnackClose}>
-                <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
-                    Employee Could not be Deleted
-                </Alert>
-            </Snackbar>
+        <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
+          Employee Deleted Successfully
+        </Alert>
+      </Snackbar>
+      <Snackbar open={deletionStatus === "Not Deleted"} autoHideDuration={3000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+          Employee Could not be Deleted
+        </Alert>
+      </Snackbar>
+
       </>
     )
 }

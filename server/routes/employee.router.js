@@ -64,9 +64,10 @@ router.post('/', rejectUnauthenticated, rejectUnauthorized, upload.single('image
 
 router.put('/:id', rejectUnauthenticated, rejectUnauthorized, 
   async (req, res) => {
-    try {
+    try { 
           const {id} = req.params
           const {name, designation, grossSalary, netSalary, taxes, role, department,status, experiences} = req.body
+          if (experiences.length > 0){
           await Employee.findOneAndUpdate({_id: id}, {$set:{name, designation, grossSalary, netSalary, taxes, role, department,status}},{ runValidators: true })
           await Experience.deleteMany({employeeId:id})
           await Promise.all(
@@ -75,7 +76,11 @@ router.put('/:id', rejectUnauthenticated, rejectUnauthorized,
             employeeExperience : element })
             experience.save()
           }))
-          res.sendStatus(200)    
+          res.sendStatus(200)
+        }
+        else {
+          res.sendStatus(400)
+        }    
         } 
     catch (error) {
         res.status(500).send(error)

@@ -17,7 +17,7 @@ import { makeStyles } from '@mui/styles';
 import AddIcon from '@mui/icons-material/Add';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles({
     imageUpload: {
@@ -36,20 +36,24 @@ const AddEmployee = () => {
     const dispatch = useDispatch()
     const inputElement = useRef();
     const classes = useStyles();
+    const {id} = useParams()
     const creationStatus = useSelector(store => store.errors.employeeCreationMessage)
+    const editValues = useSelector(store => store.employee[id])
+    const editExperiences = ()=>editValues.experiences.map(emp=>emp.employeeExperience)
 
-    const [name, setname] = useState("")
-    const [designation, setdesignation] = useState("")
-    const [grossSalary, setgrossSalary] = useState("")
-    const [netSalary, setnetSalary] = useState("")
-    const [taxes, settaxes] = useState("")
-    const [role, setrole] = useState("")
-    const [status, setstatus] = useState("active")
-    const [department, setdepartment] = useState("Customer Care")
+    const [editMode, seteditMode] = useState(window.location.pathname.split('/')[1] === 'edit')
+    const [name, setname] = useState(editMode ? editValues.name : "" )
+    const [designation, setdesignation] = useState(editMode ? editValues.designation : "")
+    const [grossSalary, setgrossSalary] = useState(editMode ? editValues.grossSalary : "")
+    const [netSalary, setnetSalary] = useState(editMode ? editValues.netSalary : "")
+    const [taxes, settaxes] = useState(editMode ? editValues.taxes : "")
+    const [role, setrole] = useState(editMode ? editValues.role : "")
+    const [status, setstatus] = useState(editMode ? editValues.status : "active")
+    const [department, setdepartment] = useState(editMode ? editValues.department : "Technical")
     const [experience, setexperience] = useState("")
-    const [experiences, setexperiences] = useState([])
+    const [experiences, setexperiences] = useState(editMode ? editExperiences() : [])
     const [image, setImage] = useState("")
-
+    
 
     const handleSnackClose = (event, reason) => {
       if (reason === 'clickaway') {
@@ -84,6 +88,16 @@ const AddEmployee = () => {
         data.append('image', image)
         dispatch({
             type : 'SUBMIT_EMPLOYEE_DATA',
+            payload : data
+        })
+    }
+
+    const onUpdateHandler = ()=>{
+        const data = {id : editValues._id , name , designation, grossSalary, netSalary ,taxes , role, status,
+            department,experiences
+        }
+        dispatch({
+            type : 'UPDATE_EMPLOYEE_DATA',
             payload : data
         })
     }
@@ -126,6 +140,7 @@ const AddEmployee = () => {
                 onChange={(e)=>{setdesignation(e.target.value)}}
                 />
             </Grid>
+            {!editMode &&
             <Grid item>
                 <FormLabel >Upload Image</FormLabel>
                 <br/>
@@ -135,6 +150,7 @@ const AddEmployee = () => {
                 onChange={(e)=>{setImage(e.target.files[0])}}
                 />
               </Grid>
+            }
             <Grid item>
                 <TextField
                 required
@@ -212,10 +228,15 @@ const AddEmployee = () => {
             <Grid item>
                 {experiences.map((exp,index)=><Chip key = {index} label={exp} onDelete={()=>{handleExperienceDelete(index)}}/>)}
             </Grid>
-           
+           {
+            editMode ?
+            <Grid item>
+                <Button variant="contained" onClick = {onUpdateHandler} > Update </Button>
+            </Grid> :
             <Grid item>
                 <Button variant="contained" onClick = {onSubmitHandler} > Submit </Button>
             </Grid>
+            }
             </Grid>
             <Snackbar open={creationStatus === "Created"} autoHideDuration={3000} onClose={handleSnackClose}>
                 <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
@@ -225,6 +246,16 @@ const AddEmployee = () => {
             <Snackbar open={creationStatus === "Could not be created"} autoHideDuration={3000} onClose={handleSnackClose}>
                 <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
                     Employee Could not be Created
+                </Alert>
+            </Snackbar>
+            <Snackbar open={creationStatus === "Updated"} autoHideDuration={3000} onClose={handleSnackClose}>
+                <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
+                    Employee Updated Successfully
+                </Alert>
+            </Snackbar>
+            <Snackbar open={creationStatus === "Could not be Updated"} autoHideDuration={3000} onClose={handleSnackClose}>
+                <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+                    Employee Could not be Updated
                 </Alert>
             </Snackbar>
         </>
