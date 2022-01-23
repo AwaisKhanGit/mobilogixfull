@@ -39,6 +39,19 @@ function* updateEmployee(action) {
   }
 }
 
+function* updateEmployeeImage(action) {
+  try {
+    yield axios.put(`/api/employee/image/${action.payload.id}`,action.payload.data);
+    yield put ({ type : 'EMPLOYEE_IMAGE_UPDATE_SUCCESSFULL'})
+    yield put({ 
+        type: 'FETCH_EMPLOYEES'
+        });
+  } catch (error) {
+    yield put ({ type : 'EMPLOYEE_IMAGE_UPDATE_UNSUCCESSFULL'})
+    console.log('Error with update employees image:', error);
+  }
+}
+
 function* deleteEmployee(action) {
   try {
     yield axios.delete(`/api/employee/${action.payload}`);
@@ -58,7 +71,8 @@ function* employeeSaga() {
   yield takeLatest('FETCH_EMPLOYEES', getEmployees);
   yield takeLatest('SUBMIT_EMPLOYEE_DATA', createEmployee);
   yield takeLatest('UPDATE_EMPLOYEE_DATA', updateEmployee);
-  yield takeLatest('DELETE_EMPLOYEE',deleteEmployee)
+  yield takeLatest('UPDATE_EMPLOYEE_IMAGE',updateEmployeeImage);
+  yield takeLatest('DELETE_EMPLOYEE',deleteEmployee);
 }
 
 export default employeeSaga;

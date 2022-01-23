@@ -1,0 +1,7 @@
+.image-card .edit-image{
+    visibility: hidden;
+}
+
+.image-card:hover .edit-image{
+    visibility: visible;
+}

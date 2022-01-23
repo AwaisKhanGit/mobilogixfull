@@ -91,7 +91,7 @@ router.put('/:id', rejectUnauthenticated, rejectUnauthorized,
 
 router.put('/image/:id', rejectUnauthenticated, rejectUnauthorized, upload.single('image'), 
   async (req, res) => {
-  const {id} = req.params
+    const {id} = req.params
   try {
     const response = await Employee.findOneAndUpdate({_id: id}, {$set:{picUrl:req.file.path,
       picName : req.file.filename}},{ runValidators: true })
@@ -99,6 +99,7 @@ router.put('/image/:id', rejectUnauthenticated, rejectUnauthorized, upload.singl
     res.status(200).send(req.file.path)
   } catch (error) {
     await cloudinary.uploader.destroy(req.file.filename)
+    console.log(error)
     res.sendStatus(500)
   }
 });

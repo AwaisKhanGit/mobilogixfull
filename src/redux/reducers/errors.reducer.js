@@ -52,6 +52,10 @@ const employeeDeletionMessage = (state = '', action) => {
       return 'Deleted';
     case 'EMPLOYEE_DELETION_UNSUCCESSFULL':
       return 'Not Deleted';
+    case 'EMPLOYEE_IMAGE_UPDATE_SUCCESSFULL':
+        return 'image updated';
+    case 'EMPLOYEE_IMAGE_UPDATE_UNSUCCESSFULL':
+        return 'image not updated';
     case 'CLEAR_EMPLOYEE_DELETION_MESSAGE':
       return '';
     default:

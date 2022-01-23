@@ -15,6 +15,9 @@ import { makeStyles } from '@mui/styles';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import './Home.css'
 
 const useStyles = makeStyles({
   editImage: {
@@ -27,12 +30,29 @@ const useStyles = makeStyles({
   },
 });
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 const Home = () => {
 
     const classes = useStyles();
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [open, setOpen] = useState(false);
+    const [image, setImage] = useState("");
+    const [selectedImageId, setselectedImageId] = useState("");
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const deletionStatus = useSelector(store => store.errors.employeeDeletionMessage)
 
     const onClickDetail = (id) =>{
@@ -44,7 +64,18 @@ const Home = () => {
     }
 
     const onEditImage = (id) => {
+      setOpen(true)
+      setselectedImageId(id)
+    }
 
+    const onSaveImage = () =>{
+      const data = new FormData()
+      data.append('image', image)
+      dispatch({
+          type : 'UPDATE_EMPLOYEE_IMAGE',
+          payload : {id : selectedImageId, data }
+      })
+      setOpen(false)
     }
 
     const onDeleteHanlder = (id) => {
@@ -93,17 +124,19 @@ const Home = () => {
          justifyContent="center">
         {employeeList.map((employee,index)=>
         <Grid item key={employee._id} xs={3}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ maxWidth: 345 }} className = "image-card">
               <CardMedia
                 component="img"
                 height="140"
                 image={employee.picUrl}
                 alt={employee.picName}
               />
-              <IconButton color="secondary" component="span" className = {classes.editImage} 
-              onClick={()=>{onEditImage(employee._id)}}>
+              {user.userRole === "admin" && 
+              <IconButton color="secondary" component="span"  
+              onClick={()=>{onEditImage(employee._id)}} className = {`${classes.editImage} edit-image`}>
                   <EditIcon />
               </IconButton>
+              }
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {employee.name}
@@ -139,7 +172,32 @@ const Home = () => {
           Employee Could not be Deleted
         </Alert>
       </Snackbar>
-
+      <Snackbar open={deletionStatus === "image updated"} autoHideDuration={3000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
+          Employee Image updated Successfully
+        </Alert>
+      </Snackbar>
+      <Snackbar open={deletionStatus === "image not updated"} autoHideDuration={3000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+          Employee Image Could not be updated
+        </Alert>
+      </Snackbar>
+      <Modal
+          open={open}
+          onClose={handleClose}
+      >
+      <Box sx={style}>
+        <Typography variant="h6" component="h2">
+          Update Image
+        </Typography>
+        <input type="file"
+          onChange={(e)=>{setImage(e.target.files[0])}}
+        />
+        <Button variant="contained" onClick = {onSaveImage}>
+          Save
+        </Button>
+      </Box>
+      </Modal>
       </>
     )
 }
