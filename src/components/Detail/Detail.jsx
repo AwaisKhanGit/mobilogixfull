@@ -7,15 +7,14 @@ import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
+  mainContainer: {
+    width:"80%",
+    margin:"auto",
+    marginTop:"4rem"
   },
+  employeeExp : {
+    margin:"auto"
+  }
 });
 
 
@@ -26,7 +25,7 @@ const Detail = () =>{
   const employeeDetail = useSelector(state => state.employee[id])
 
   return (
-      <Grid direction="column"  >
+      <Grid container direction="column"  className={classes.mainContainer}>
         <Grid item style={{marginBottom:"1rem"}}>
             <Typography variant="h6" >Employee Detail</Typography>
         </Grid>
@@ -35,32 +34,54 @@ const Detail = () =>{
         </Grid>
           <Grid item container spacing={1} style={{marginBottom:"1rem"}}>
             <Grid item>
-            <Typography variant="h5" >{employeeDetail.name}</Typography>
+            <Typography variant="h5" >Name: {employeeDetail.name}</Typography>
             </Grid>
           </Grid>
           <Grid item container direction="column" style={{marginBottom:"1rem"}}>
           <Grid item>
               <Typography variant="subtitle1">
-                  {employeeDetail.designation}
+                  Designation: {employeeDetail.designation}
               </Typography>
           </Grid>
           <Grid item>
               <Typography variant="subtitle1">
-                  And I am a Full Stack Web Developer
+                  Gross Salary: {employeeDetail.grossSalary}
+              </Typography>
+          </Grid>
+          <Grid item>
+              <Typography variant="subtitle1">
+                  Net Salary: {employeeDetail.netSalary}
+              </Typography>
+          </Grid>
+          <Grid item>
+              <Typography variant="subtitle1">
+                  Taxes: {employeeDetail.taxes}
+              </Typography>
+          </Grid>
+          <Grid item>
+              <Typography variant="subtitle1">
+                  Empolyment Status: {employeeDetail.status}
+              </Typography>
+          </Grid>
+          <Grid item>
+              <Typography variant="subtitle1">
+                  Department: {employeeDetail.department}
+              </Typography>
+          </Grid>
+          <Grid item>
+              <Typography variant="subtitle1">
+                  Experiences:
               </Typography>
           </Grid>
           </Grid>
-          <Grid container>
+          <Grid container spacing={4}>
               {
               employeeDetail.experiences.map((exp,index)=>
               <Grid item xs={3} key={index}>
-                <Paper elevation={1} className="paper-container">
-                  <Grid container item spacing={2} alignItems="center">
-                  {/* <Grid item>
-                  <img src={tech.iconName} alt={tech.techName} className="paper-image" />
-                  </Grid> */}
-                  <Grid item>
-                  <Typography variant="subtitle1">{exp.employeeExperience}</Typography>
+                <Paper elevation={1}>
+                  <Grid container item  alignItems="center">
+                  <Grid item className={classes.employeeExp}>
+                  <Typography variant="subtitle1" >{exp.employeeExperience}</Typography>
                   </Grid>
                   </Grid>
                 </Paper>
