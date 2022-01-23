@@ -1,11 +1,13 @@
-const express = require('express');
-const {
-  rejectUnauthenticated
-} = require('../modules/authentication-middleware');
-const encryptLib = require('../modules/encryption');
-const userStrategy = require('../strategies/user.strategy');
-const User = require("../models/user.model")
+import express from 'express'
 const router = express.Router();
+import User from '../models/user.model'
+import  {
+  rejectUnauthenticated,
+} from '../modules/authentication-middleware'
+import encryptLib from '../modules/encryption'
+import userStrategy from '../strategies/user.strategy'
+
+
 
 router.get('/', rejectUnauthenticated, (req, res) => {
   const myreponse = {
@@ -38,4 +40,4 @@ router.post('/register', (req, res) => {
 });
 
 
-module.exports = router;
+exports.default = router;

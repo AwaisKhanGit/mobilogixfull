@@ -1,13 +1,17 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-const Experience = require('../models/experience.model')
-const Employee = require('../models/employee.model')
-const {
+import Experience from '../models/experience.model'
+import Employee from '../models/employee.model'
+import  {
   rejectUnauthenticated,
   rejectUnauthorized
-} = require('../modules/authentication-middleware');
-const multer  = require('multer')
-const {storage,cloudinary} = require('../modules/cloudinary')
+} from '../modules/authentication-middleware'
+import multer from 'multer'
+import  {
+  storage,
+  cloudinary
+} from '../modules/authentication-middleware'
+
 const upload = multer({storage})
 
 
@@ -121,5 +125,4 @@ router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, async (req, res
     }
   })
 
-
-module.exports = router;
+exports.default = router;

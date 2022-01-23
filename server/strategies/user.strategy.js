@@ -1,8 +1,10 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const encryptLib = require('../modules/encryption');
-const User = require('../models/user.model');
+import passport from 'passport'
+import localStrategy from 'passport-local'
+import encryptLib from '../modules/encryption'
+import User from '../models/user.model'
 
+
+const LocalStrategy = localStrategy.Strategy;
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
@@ -44,4 +46,4 @@ passport.use(
   })
 );
 
-module.exports = passport;
+exports.default = passport;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const experienceSchema = new mongoose.Schema({
     employeeId: {
@@ -12,4 +12,4 @@ const experienceSchema = new mongoose.Schema({
 })
 
 const Experience = mongoose.model('Experience',experienceSchema)
-module.exports = Experience
+exports.default = Experience

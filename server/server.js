@@ -1,13 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-require('dotenv').config();
-const connectDB = require('./db/mongoose')
-
+import express from 'express'
+import bodyParser from 'body-parser'
+import dotenv from 'dotenv';
+dotenv.config()
+import connectDB from './db/mongoose'
 connectDB()
 
 const app = express();
 const sessionMiddleware = require('./modules/session-middleware');
-const passport = require('./strategies/user.strategy');
+import passport from './strategies/user.strategy'
 
 // Route includes
 const userRouter = require('./routes/user.router');

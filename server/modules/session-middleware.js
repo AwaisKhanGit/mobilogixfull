@@ -1,6 +1,6 @@
-const cookieSession = require('cookie-session');
+import cookieSession from 'cookie-session'
 
-module.exports = cookieSession({
+export default cookieSession({
   secret: process.env.SERVER_SESSION_SECRET,
   key: 'user',
   resave: 'false',
@@ -8,3 +8,5 @@ module.exports = cookieSession({
   maxAge: 1000 * 60 * 60 * 24 * 7,
   secure: false,
 });
+
+// exports.default = cookie

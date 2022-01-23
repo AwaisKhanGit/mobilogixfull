@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Experience = require('../models/experience.model');
+import mongoose from 'mongoose'
 
 const employeeSchema = new mongoose.Schema({
     picUrl: {
@@ -59,4 +58,4 @@ const employeeSchema = new mongoose.Schema({
 })
 
 const Employee = mongoose.model('Employee',employeeSchema)
-module.exports = Employee
+exports.default = Employee

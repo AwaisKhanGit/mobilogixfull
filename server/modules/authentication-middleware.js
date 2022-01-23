@@ -16,4 +16,4 @@ const rejectUnauthorized = (req, res, next) => {
 
 
 
-module.exports = { rejectUnauthenticated, rejectUnauthorized };
+exports.default = { rejectUnauthenticated, rejectUnauthorized };

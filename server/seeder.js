@@ -1,12 +1,12 @@
-const Users = require('./models/user.model');
-const Employee = require('./models/employee.model');
-const Experiences = require('./models/experience.model');
-const employees = require('./data/employeeData');
-const experiences = require('./data/experienceData');
-
-const encryptLib = require('./modules/encryption');
-require('dotenv').config();
-const connectDB = require('./db/mongoose')
+import Users from './models/user.model'
+import Employee from './models/employee.model'
+import Experiences from './models/experience.model'
+import employees from './data/employeeData'
+import experiences from './data/experienceData'
+import encryptLib from './modules/encryption'
+import connectDB from './db/mongoose'
+import dotenv from 'dotenv';
+dotenv.config()
 
 connectDB()
 

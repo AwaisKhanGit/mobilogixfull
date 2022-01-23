@@ -39,11 +39,11 @@
   "scripts": {
     "start": "node server/server.js",
     "client": "react-scripts start",
-    "server": "nodemon --watch server server/server.js",
+    "server": "nodemon --exec babel-node server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "data:import": "node server/seeder.js"
+    "data:import": "babel-node server/seeder.js"
   },
   "eslintConfig": {
     "extends": [
@@ -64,9 +64,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.10",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "babel-plugin-module-resolver": "^4.1.0",
     "nodemon": "^2.0.15"
   }
 }

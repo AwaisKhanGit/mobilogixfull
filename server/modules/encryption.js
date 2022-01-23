@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs'
 
 const SALT_WORK_FACTOR = 12;
 
@@ -11,7 +11,7 @@ const comparePassword = (candidatePassword, storedPassword) => {
   return bcrypt.compareSync(candidatePassword, storedPassword);
 };
 
-module.exports = {
+exports.default = {
   encryptPassword,
   comparePassword,
 };

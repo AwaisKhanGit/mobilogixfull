@@ -49,4 +49,4 @@ const employees = [
     }
 ]
 
-module.exports = employees
+exports.default = employees
