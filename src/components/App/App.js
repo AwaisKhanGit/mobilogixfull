@@ -23,17 +23,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-      <Header/>
-        <Routes>
-          <Route path="/" exact element={!user._id ? <Navigate  to="/login" /> : <Home />} />
-          <Route path="/login" exact element={user._id ? <Navigate  to="/" /> : <LoginPage />} />
-          <Route path="/registration" exact element={user._id ? <Navigate  to="/" /> : <RegisterPage />} />
-          <Route path="/detail/:id" exact element={!user._id ? <Navigate  to="/detail" /> : <Detail />} />
-          <Route path="/add" exact element= { user.userRole === "admin" && <AddEmployee />} />
-          <Route path="/edit/:id" exact element= { user.userRole === "admin" && <AddEmployee />} />
-          <Route path='*' element={<h1> 404 : PAGE NOT FOUND </h1>} />
-        </Routes>
-      <Footer/>
+        <Header/>
+          <Routes>
+            <Route path="/" exact element={!user._id ? <Navigate  to="/login" /> : <Home />} />
+            <Route path="/login" exact element={user._id ? <Navigate  to="/" /> : <LoginPage />} />
+            <Route path="/registration" exact element={user._id ? <Navigate  to="/" /> : <RegisterPage />} />
+            <Route path="/detail/:id" exact element={!user._id ? <Navigate  to="/detail" /> : <Detail />} />
+            <Route path="/add" exact element= { user.userRole === "admin" && <AddEmployee />} />
+            <Route path="/edit/:id" exact 
+                   element= { user.userRole === "admin" && employee.length !== 0 ? 
+                   <AddEmployee /> : <Navigate  to="/" />} />
+            <Route path='*' element={<h1> 404 : PAGE NOT FOUND </h1>} />
+          </Routes>
+        <Footer/>
       </Router>
     </ThemeProvider>
   );

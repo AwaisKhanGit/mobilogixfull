@@ -31,16 +31,16 @@ const Detail = () =>{
         <Grid item style={{marginBottom:"1rem"}}>
           <img src={employeeDetail.picUrl} alt={employeeDetail.picName} width="250"/>
         </Grid>
-          <Grid item container spacing={1} style={{marginBottom:"1rem"}}>
-            <Grid item>
-            <Typography variant="h5" >Name: {employeeDetail.name}</Typography>
-            </Grid>
-          </Grid>
-          <Grid item container direction="column" style={{marginBottom:"1rem"}}>
+        <Grid item container spacing={1} style={{marginBottom:"1rem"}}>
           <Grid item>
-              <Typography variant="subtitle1">
-                  Designation: {employeeDetail.designation}
-              </Typography>
+            <Typography variant="h5" >Name: {employeeDetail.name}</Typography>
+          </Grid>
+        </Grid>
+        <Grid item container direction="column" style={{marginBottom:"1rem"}}>
+          <Grid item>
+            <Typography variant="subtitle1">
+                Designation: {employeeDetail.designation}
+            </Typography>
           </Grid>
           <Grid item>
               <Typography variant="subtitle1">
@@ -72,21 +72,21 @@ const Detail = () =>{
                   Experiences:
               </Typography>
           </Grid>
-          </Grid>
-          <Grid container spacing={4}>
-              {
-              employeeDetail.experiences.map((exp,index)=>
+        </Grid>
+        <Grid container spacing={4}>
+          {
+            employeeDetail.experiences.map((exp,index)=>
               <Grid item xs={3} key={index}>
                 <Paper elevation={1}>
                   <Grid container item  alignItems="center">
-                  <Grid item className={classes.employeeExp}>
-                  <Typography variant="subtitle1" >{exp.employeeExperience}</Typography>
-                  </Grid>
+                    <Grid item className={classes.employeeExp}>
+                      <Typography variant="subtitle1" >{exp.employeeExperience}</Typography>
+                    </Grid>
                   </Grid>
                 </Paper>
               </Grid>
-              )}
-          </Grid>
+            )}
+        </Grid>
       </Grid>
   );
 }

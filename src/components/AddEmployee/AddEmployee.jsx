@@ -43,7 +43,6 @@ const AddEmployee = () => {
     const creationStatus = useSelector(store => store.errors.employeeCreationMessage)
     const editValues = useSelector(store => store.employee[id])
     const editExperiences = ()=>editValues.experiences.map(emp=>emp.employeeExperience)
-
     const [editMode, seteditMode] = useState(window.location.pathname.split('/')[1] === 'edit')
     const [name, setname] = useState(editMode ? editValues.name : "" )
     const [designation, setdesignation] = useState(editMode ? editValues.designation : "")
@@ -152,7 +151,7 @@ const AddEmployee = () => {
                 ref={inputElement}
                 onChange={(e)=>{setImage(e.target.files[0])}}
                 />
-              </Grid>
+            </Grid>
             }
             <Grid item>
                 <TextField
@@ -215,18 +214,18 @@ const AddEmployee = () => {
             </Select>
             </Grid>
             <Grid item>
-            <TextField
-                required
-                label="Add Experiences"
-                value={experience}
-                onChange={(e)=>{setexperience(e.target.value)}}
-                helperText={experiences.length < 1 ? "Add(+) atleast one experience before Submit" : ""}
-            />
-            <IconButton color="primary" component="span"
-            onClick = {()=>{setexperiences([...experiences,experience]);setexperience("")}}
-            disabled = {!experience}>
-                <AddIcon />
-            </IconButton>
+                <TextField
+                    required
+                    label="Add Experiences"
+                    value={experience}
+                    onChange={(e)=>{setexperience(e.target.value)}}
+                    helperText={experiences.length < 1 ? "Add(+) atleast one experience before Submit" : ""}
+                />
+                <IconButton color="primary" component="span"
+                    onClick = {()=>{setexperiences([...experiences,experience]);setexperience("")}}
+                    disabled = {!experience}>
+                    <AddIcon />
+                </IconButton>
             </Grid>
             <Grid item className = {classes.experiencesChips}>
                 {experiences.map((exp,index)=><Chip key = {index} label={exp} onDelete={()=>{handleExperienceDelete(index)}}/>)}
@@ -241,7 +240,7 @@ const AddEmployee = () => {
             </Grid>
             }
             </Grid>
-            <Snackbar open={creationStatus === "Created"} autoHideDuration={3000} onClose={handleSnackClose}>
+            <Snackbar open={creationStatus === "Created"} autoHideDuration={3000} onClose=      {handleSnackClose}>
                 <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
                     Employee Created Successfully
                 </Alert>

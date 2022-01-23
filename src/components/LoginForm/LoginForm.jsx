@@ -39,13 +39,13 @@ function LoginForm() {
 
   return (  
     <Grid container direction="column" alignContent="center" spacing={2} className = {classes.mainContainer} >
-    <Grid item>
-    <Typography variant="h5">Login</Typography>
-    </Grid>
-    {errors.loginMessage && (
       <Grid item>
-         <Typography variant="h6" className="alert" role="alert" >{errors.loginMessage}</Typography>
+        <Typography variant="h5">Login</Typography>
       </Grid>
+      {errors.loginMessage && (
+        <Grid item>
+          <Typography variant="h6" className="alert" role="alert" >{errors.loginMessage}</Typography>
+        </Grid>
     )} 
       <Grid item>
         <TextField
@@ -69,7 +69,6 @@ function LoginForm() {
           <Button onClick={login} variant="contained" disabled={!username && !password}>Login</Button>
       </Grid>
     </Grid>
-
   );
 }
 

@@ -22,7 +22,7 @@ import './Home.css'
 const useStyles = makeStyles({
   editImage: {
       position : "relative",
-      bottom: 140
+      bottom: 310
   },
 });
 
@@ -123,7 +123,7 @@ const Home = () => {
             <Card sx={{ maxWidth: 345 }} className = "image-card">
               <CardMedia
                 component="img"
-                height="140"
+                height="320"
                 image={employee.picUrl}
                 alt={employee.picName}
               />

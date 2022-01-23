@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
+import { useLocation } from "react-router-dom"
 
 const useStyles = makeStyles({
     appBar : {
@@ -21,10 +22,10 @@ const useStyles = makeStyles({
 
 export default function Header() {
 
-    
   const user = useSelector((store) => store.user); 
   const dispatch = useDispatch();
   const classes = useStyles();
+  const location = useLocation();
 
   const onLogOut = ()=> {
     swal({
@@ -52,7 +53,8 @@ export default function Header() {
             className = {classes.siteHeading}>
                  Mobilogix Employee Manager
             </Typography>
-            {user.userRole === "admin" && <Button color="inherit" component={Link} to = "/add">Add Employee</Button>}
+            {user.userRole === "admin" && !location.pathname.includes("edit") &&
+            <Button color="inherit" component= {Link} to = "/add">Add Employee</Button>}
             {!user._id && <Button color="inherit">Login/SignUp</Button>}
             {user._id && <Button color="inherit" onClick = {onLogOut} >Logout</Button>}
           </Toolbar>

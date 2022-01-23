@@ -11,7 +11,6 @@ function RegisterForm() {
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
-
   const registerUser = () => {
     dispatch({
       type: 'REGISTER',
@@ -31,7 +30,6 @@ function RegisterForm() {
         </h3>
       )}
       </Grid>
-
       <Grid item>
           <TextField
             label="Username"
