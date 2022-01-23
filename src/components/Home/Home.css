@@ -5,3 +5,7 @@
 .image-card:hover .edit-image{
     visibility: visible;
 }
+
+body {
+    margin: 0;
+}

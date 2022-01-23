@@ -28,6 +28,9 @@ const useStyles = makeStyles({
     },
     imageUploadButton:{
         marginTop : "0.5rem"
+    },
+    experiencesChips:{
+        maxWidth:"25% !important"
     }
   });
 
@@ -225,7 +228,7 @@ const AddEmployee = () => {
                 <AddIcon />
             </IconButton>
             </Grid>
-            <Grid item>
+            <Grid item className = {classes.experiencesChips}>
                 {experiences.map((exp,index)=><Chip key = {index} label={exp} onDelete={()=>{handleExperienceDelete(index)}}/>)}
             </Grid>
            {

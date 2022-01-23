@@ -37,7 +37,10 @@ router.get('/', rejectUnauthenticated,
 
 router.post('/', rejectUnauthenticated, rejectUnauthorized, upload.single('image'), 
   async (req, res) => {
-    try {
+    try { if( !req.file.filename && !req.file.path){
+              res.sendStatus(400)
+          }
+          else {
           const {name, designation, grossSalary, netSalary, taxes, role, department,status, experiences} = req.body
           if ( JSON.parse(experiences).length > 0)
           {
@@ -53,6 +56,7 @@ router.post('/', rejectUnauthenticated, rejectUnauthorized, upload.single('image
           else {
             res.sendStatus(400)
           }
+        }
         } 
     catch (error) {
         await cloudinary.uploader.destroy(req.file.filename)
@@ -68,7 +72,8 @@ router.put('/:id', rejectUnauthenticated, rejectUnauthorized,
           const {id} = req.params
           const {name, designation, grossSalary, netSalary, taxes, role, department,status, experiences} = req.body
           if (experiences.length > 0){
-          await Employee.findOneAndUpdate({_id: id}, {$set:{name, designation, grossSalary, netSalary, taxes, role, department,status}},{ runValidators: true })
+          await Employee.findOneAndUpdate({_id: id}, {$set:{name, designation, grossSalary, netSalary, taxes, role, department,status}},
+            { runValidators: true, upsert: true, new: true })
           await Experience.deleteMany({employeeId:id})
           await Promise.all(
           experiences.map((element) => {
@@ -91,18 +96,19 @@ router.put('/:id', rejectUnauthenticated, rejectUnauthorized,
 
 router.put('/image/:id', rejectUnauthenticated, rejectUnauthorized, upload.single('image'), 
   async (req, res) => {
-    const {id} = req.params
+  const {id} = req.params
   try {
+    if(!req.file.filename){throw new Error('No Image')}
     const response = await Employee.findOneAndUpdate({_id: id}, {$set:{picUrl:req.file.path,
-      picName : req.file.filename}},{ runValidators: true })
+      picName : req.file.filename}},{ runValidators: true})
     await cloudinary.uploader.destroy(response.picName)
     res.status(200).send(req.file.path)
   } catch (error) {
-    await cloudinary.uploader.destroy(req.file.filename)
-    console.log(error)
+    if(req.file) await cloudinary.uploader.destroy(req.file.filename)
     res.sendStatus(500)
   }
-});
+}
+);
 
 router.delete('/:id', rejectUnauthenticated, rejectUnauthorized, async (req, res) => {
     const {id} = req.params

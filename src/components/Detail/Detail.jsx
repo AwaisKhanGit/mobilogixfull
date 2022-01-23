@@ -8,7 +8,6 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   mainContainer: {
-    width:"80%",
     margin:"auto",
     marginTop:"4rem"
   },
@@ -25,7 +24,7 @@ const Detail = () =>{
   const employeeDetail = useSelector(state => state.employee[id])
 
   return (
-      <Grid container direction="column"  className={classes.mainContainer}>
+      <Grid container direction="column" xs={10} className={classes.mainContainer}>
         <Grid item style={{marginBottom:"1rem"}}>
             <Typography variant="h6" >Employee Detail</Typography>
         </Grid>

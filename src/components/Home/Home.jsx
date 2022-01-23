@@ -21,12 +21,8 @@ import './Home.css'
 
 const useStyles = makeStyles({
   editImage: {
-      position : "absolute",
-      top : 23,
-      borderRadius: "50%",
-      border : "1px solid white",
-      width: "40px",
-      height: "40px" 
+      position : "relative",
+      bottom: 140
   },
 });
 
@@ -51,7 +47,6 @@ const Home = () => {
     const [open, setOpen] = useState(false);
     const [image, setImage] = useState("");
     const [selectedImageId, setselectedImageId] = useState("");
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const deletionStatus = useSelector(store => store.errors.employeeDeletionMessage)
 
@@ -76,6 +71,7 @@ const Home = () => {
           payload : {id : selectedImageId, data }
       })
       setOpen(false)
+      setImage("")
     }
 
     const onDeleteHanlder = (id) => {
